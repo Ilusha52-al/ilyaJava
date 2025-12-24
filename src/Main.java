@@ -3,27 +3,42 @@ import geometry2d.*;
 import geometry2d.exceptions.*;
 import geometry3d.*;
 import geometry3d.exceptions.*;
-import java.util.Scanner;
+import collections.*;
+import utils.StringProcessor;
+
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("=== Java OOP Interactive Demo ===");
-        System.out.println("Выберите задание для демонстрации:");
-        System.out.println("1. Кнопка (Button)");
-        System.out.println("2. Весы (Balance)");
-        System.out.println("3. Колокол (Bell)");
-        System.out.println("4. Разделитель четных/нечетных (OddEvenSeparator)");
-        System.out.println("5. Таблица (Table)");
-        System.out.println("6. Геометрические фигуры");
-        System.out.println("0. Выход");
+        System.out.println("=== Java OOP & Collections Laboratory Work ===");
 
         while (true) {
-            System.out.print("\nВыберите задание (1-6, 0 для выхода): ");
+            System.out.println("\n=== ГЛАВНОЕ МЕНЮ ===");
+            System.out.println("ООП задания:");
+            System.out.println(" 1. Кнопка (Button)");
+            System.out.println(" 2. Весы (Balance)");
+            System.out.println(" 3. Колокол (Bell)");
+            System.out.println(" 4. Разделитель четных/нечетных");
+            System.out.println(" 5. Таблица (Table)");
+            System.out.println(" 6. Геометрические фигуры");
+
+            System.out.println("\nКоллекции:");
+            System.out.println(" 7. Работа с Collections API");
+            System.out.println(" 8. Генератор простых чисел");
+            System.out.println(" 9. Класс Human и коллекции");
+            System.out.println("10. Частота слов в тексте");
+            System.out.println("11. Обращение Map<K, V>");
+
+            System.out.println("\n0. Выход");
+
+            System.out.print("\nВаш выбор: ");
             int choice = scanner.nextInt();
+            scanner.nextLine(); // очистка буфера
 
             switch (choice) {
+                // ООП задания
                 case 1:
                     demoButton(scanner);
                     break;
@@ -42,6 +57,24 @@ public class Main {
                 case 6:
                     demoGeometry(scanner);
                     break;
+
+                // Коллекции задания
+                case 7:
+                    CollectionsTasks.demo();
+                    break;
+                case 8:
+                    PrimesGeneratorTest.demo();
+                    break;
+                case 9:
+                    demoHumanCollections();
+                    break;
+                case 10:
+                    demoWordFrequency(scanner);
+                    break;
+                case 11:
+                    demoMapInversion();
+                    break;
+
                 case 0:
                     System.out.println("Программа завершена.");
                     scanner.close();
@@ -52,10 +85,11 @@ public class Main {
         }
     }
 
+    // Методы для ООП заданий (остаются как были ранее)...
     private static void demoButton(Scanner scanner) {
         System.out.println("\n=== Демонстрация класса Button ===");
         System.out.println("Создана кнопка. Нажмите Enter для клика, 'q' для выхода.");
-        scanner.nextLine(); // Очистка буфера
+        scanner.nextLine();
 
         Button button = new Button();
 
@@ -78,7 +112,7 @@ public class Main {
         System.out.println("Добавляйте вес на левую и правую чаши.");
         System.out.println("Команды: 'l <вес>' - добавить на левую, 'r <вес>' - на правую");
         System.out.println("'result' - показать результат, 'q' - выход");
-        scanner.nextLine(); // Очистка буфера
+        scanner.nextLine();
 
         while (true) {
             System.out.print("\nВведите команду: ");
@@ -119,7 +153,7 @@ public class Main {
         Bell bell = new Bell();
 
         System.out.println("Нажмите Enter для звука колокола, 'q' для выхода");
-        scanner.nextLine(); // Очистка буфера
+        scanner.nextLine();
 
         int count = 0;
         while (true) {
@@ -142,8 +176,8 @@ public class Main {
         System.out.println("Добавляйте числа в разделитель.");
         System.out.println("Команды: 'add <число>' - добавить число");
         System.out.println("'even' - показать четные, 'odd' - показать нечетные");
-        System.out.println("'all' - показать все, 'clear' - очистить, 'q' - выход");
-        scanner.nextLine(); // Очистка буфера
+        System.out.println("'clear' - очистить, 'q' - выход");
+        scanner.nextLine();
 
         while (true) {
             System.out.print("\nВведите команду: ");
@@ -157,8 +191,6 @@ public class Main {
             } else if (input.equalsIgnoreCase("odd")) {
                 System.out.print("Нечетные числа: ");
                 separator.odd();
-            } else if (input.equalsIgnoreCase("all")) {
-                System.out.println("Все числа: " + separator.getNumbers());
             } else if (input.equalsIgnoreCase("clear")) {
                 separator = new OddEvenSeparator();
                 System.out.println("Разделитель очищен");
@@ -183,7 +215,7 @@ public class Main {
         int rows = scanner.nextInt();
         System.out.print("Введите количество столбцов: ");
         int cols = scanner.nextInt();
-        scanner.nextLine(); // Очистка буфера
+        scanner.nextLine();
 
         Table table = new Table(rows, cols);
 
@@ -254,7 +286,7 @@ public class Main {
         while (true) {
             System.out.print("\nВыберите опцию (1-5, 0 - назад): ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Очистка буфера
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -284,7 +316,7 @@ public class Main {
         try {
             System.out.print("Введите радиус круга: ");
             double radius = scanner.nextDouble();
-            scanner.nextLine(); // Очистка
+            scanner.nextLine();
 
             Circle circle = new Circle(radius);
             System.out.println("Создан: " + circle);
@@ -301,7 +333,7 @@ public class Main {
             double width = scanner.nextDouble();
             System.out.print("Введите высоту прямоугольника: ");
             double height = scanner.nextDouble();
-            scanner.nextLine(); // Очистка
+            scanner.nextLine();
 
             Rectangle rectangle = new Rectangle(width, height);
             System.out.println("Создан: " + rectangle);
@@ -318,7 +350,7 @@ public class Main {
             double radius = scanner.nextDouble();
             System.out.print("Введите высоту цилиндра: ");
             double height = scanner.nextDouble();
-            scanner.nextLine(); // Очистка
+            scanner.nextLine();
 
             Circle circle = new Circle(radius);
             Cylinder cylinder = new Cylinder(circle, height);
@@ -338,7 +370,7 @@ public class Main {
             double height = scanner.nextDouble();
             System.out.print("Введите высоту цилиндра: ");
             double cylinderHeight = scanner.nextDouble();
-            scanner.nextLine(); // Очистка
+            scanner.nextLine();
 
             Rectangle rectangle = new Rectangle(width, height);
             Cylinder cylinder = new Cylinder(rectangle, cylinderHeight);
@@ -371,5 +403,59 @@ public class Main {
         } catch (Exception e) {
             System.out.println("3. Поймано исключение: " + e.getMessage());
         }
+    }
+
+    // Методы для заданий по коллекциям...
+
+    private static void demoHumanCollections() {
+        System.out.println("\n=== Демонстрация класса Human и коллекций ===");
+        collections.HumanCollectionsDemo.demo();
+    }
+
+    private static void demoWordFrequency(Scanner scanner) {
+        System.out.println("\n=== Частота слов в тексте ===");
+        System.out.println("Введите текст на английском языке:");
+        System.out.println("(Для использования примера введите 'example')");
+
+        String text = scanner.nextLine();
+
+        if (text.equalsIgnoreCase("example")) {
+            text = "Hello world! Hello Java. World of Java is amazing. " +
+                    "Java programming is fun. Hello fun world!";
+            System.out.println("\nИспользуется пример текста:");
+            System.out.println(text);
+        }
+
+        Map<String, Integer> frequency = StringProcessor.getWordFrequency(text);
+
+        System.out.println("\nЧастота слов:");
+        for (Map.Entry<String, Integer> entry : frequency.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+    }
+
+    private static void demoMapInversion() {
+        System.out.println("\n=== Обращение Map<K, V> ===");
+
+        // Создаем тестовую Map
+        Map<String, Integer> originalMap = new HashMap<>();
+        originalMap.put("apple", 1);
+        originalMap.put("banana", 2);
+        originalMap.put("cherry", 3);
+        originalMap.put("date", 2); // дублирующее значение
+
+        System.out.println("Исходная Map:");
+        for (Map.Entry<String, Integer> entry : originalMap.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
+
+        Map<Integer, String> invertedMap = CollectionsTasks.invertMap(originalMap);
+
+        System.out.println("\nИнвертированная Map:");
+        for (Map.Entry<Integer, String> entry : invertedMap.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
+
+        System.out.println("\nПримечание: При дублирующихся значениях сохраняется последний ключ.");
     }
 }
